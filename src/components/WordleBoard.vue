@@ -6,9 +6,7 @@ import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE } from '@/settings';
 defineProps({
   wordOfTheDay: {
     type: String,
-    validator: (wordGiven: string) => wordGiven.length === 5 
-    && wordGiven.toUpperCase() === wordGiven
-    && englishWords.includes(wordGiven)
+    validator: (wordGiven: string) => englishWords.includes(wordGiven)
   }
 })
 
