@@ -56,4 +56,12 @@ describe('WordleBoard', () => {
     
     expect(console.warn).toHaveBeenCalled()
   })
+
+  test("If a real uppercase English word with 5 characters is provided, no warning is emited", async() => {
+    console.warn = vi.fn()
+    
+    mount(WordleBoard, {props: {wordOfTheDay: "TESTS"}})
+    
+    expect(console.warn).not.toHaveBeenCalled()
+  })
 })
