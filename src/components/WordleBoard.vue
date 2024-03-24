@@ -19,69 +19,78 @@ const isGameOver = computed(() => guessesSubmitted.value.length === MAX_GUESSES_
 </script>
 
 <template>
-  <h1 class="text-primary text-center">Guess the Word!</h1>
+  <!--<h1 class="text-primary text-center">Guess the Word!</h1>
   <h2 class="text-secondary text-center">
     Start typing right up! You have 6 chances to win ;)
   </h2>
   <div class="content-center">
-    <!--<ul class="text-secondary letter-box-container">
+    <ul class="text-secondary letter-box-container">
       <li v-if="guessSubmitted" v-for="letterGuessed in guessSubmitted.split('')" class="letter-box text-center">{{ letterGuessed }}</li>
       <li v-else="guessSubmitted" v-for="index in [...Array(5).keys()]" class="letter-box ">{{ "" }}</li>
-    </ul>-->
-  </div>
+    </ul>
+  </div>-->
+  <main>
+    <ul>
+      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
+        {{ guess }}
+      </li>
+    </ul>
+    <p v-if="isGameOver" v-text="guessesSubmitted.includes(wordOfTheDay) ?
+        VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
+  </main>
   <guessInput @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
-  <p v-if="isGameOver" 
-  v-text="guessesSubmitted.includes(wordOfTheDay) ? 
-  VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
 </template>
 
 <style scoped>
-  .content-center {
-    display: flex;
-    justify-content: center;
-    padding: 2rem 0;
-  }
-  .text-center {
-    text-align: center;
-    vertical-align: middle;
-  }
-  .text-primary {
-    color: #0f2d06;
-    font-family: "Outfit", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
+.content-center {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
 
-  .text-secondary {
-    color: #3e9e12;
-    font-family: "Outfit", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
-  .letter-box-container {
-    list-style: none;
-    display: block;
-    padding: 0;
-    margin: 0;
-    width: 350px;
-  }
+.text-center {
+  text-align: center;
+  vertical-align: middle;
+}
 
-  .letter-box-container:last-child {
-    margin-right: 0;
-  }
+.text-primary {
+  color: #0f2d06;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
-  .letter-box {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid #52c01b;
-    border-radius: 15px;
-    background-color: #f1fde8;
-    height: 3.8rem;
-    width: 60px;
-    font-size: 2rem;
-    margin-right: 5px;
-  }
+.text-secondary {
+  color: #3e9e12;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.letter-box-container {
+  list-style: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: 350px;
+}
+
+.letter-box-container:last-child {
+  margin-right: 0;
+}
+
+.letter-box {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #52c01b;
+  border-radius: 15px;
+  background-color: #f1fde8;
+  height: 3.8rem;
+  width: 60px;
+  font-size: 2rem;
+  margin-right: 5px;
+}
 </style>
