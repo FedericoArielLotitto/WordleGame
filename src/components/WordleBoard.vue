@@ -36,8 +36,7 @@ const guessSubmitted = ref("")
   }
   .text-center {
     text-align: center;
-    display: grid;
-    align-items: center;
+    vertical-align: middle;
   }
   .text-primary {
     color: #0f2d06;
@@ -55,20 +54,27 @@ const guessSubmitted = ref("")
     font-style: normal;
   }
   .letter-box-container {
-    list-style-type: none;
-    display: grid;
-    grid-template: 2.4rem / auto auto auto auto auto;
-    gap: 10px;
+    list-style: none;
+    display: block;
     padding: 0;
     margin: 0;
-    width: 350px
+    width: 350px;
   }
+
+  .letter-box-container:last-child {
+    margin-right: 0;
+  }
+  
   .letter-box {
-    border: .2rem solid #52c01b;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #52c01b;
     border-radius: 15px;
     background-color: #f1fde8;
     height: 3.8rem;
     width: 60px;
     font-size: 2rem;
+    margin-right: 5px;
   }
 </style>
