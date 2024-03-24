@@ -61,22 +61,6 @@ const isGameOver = computed(() => guessesSubmitted.value.length === MAX_GUESSES_
   font-style: normal;
 }
 
-.text-secondary {
-  color: #3e9e12;
-  font-family: "Outfit", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.letter-box-container {
-  list-style: none;
-  display: block;
-  padding: 0;
-  margin: 0;
-  width: 350px;
-}
-
 .letter-box-container:last-child {
   margin-right: 0;
 }
