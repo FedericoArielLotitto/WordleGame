@@ -236,7 +236,7 @@ describe('WordleBoard', () => {
     const wordOfTheDay = "WORLD"
     const playerGuess = "WRONG"
 
-    test.skipIf(expectedFeedback !== "correct")(`the feedback for '${playerGuess[position]}' (index: ${position}) should be '${expectedFeedback} becasuse '${reason}'`, async () => {
+    test(`the feedback for '${playerGuess[position]}' (index: ${position}) should be '${expectedFeedback} becasuse '${reason}'`, async () => {
       wrapper = mount(WordleBoard, {propsData: {wordOfTheDay}})
 
       await playerTypesAndSubmitsGuess(playerGuess)
