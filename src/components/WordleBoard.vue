@@ -2,30 +2,35 @@
 import { ref } from 'vue'
 import GuessInput from "@/components/GuessInput.vue";
 import englishWords from '@/englishWordsWith5Letters.json'
-import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE } from '@/settings';
+import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE, MAX_GUESSES_COUNT } from '@/settings';
 
 defineProps({
   wordOfTheDay: {
     type: String,
+    required: true,
     validator: (wordGiven: string) => englishWords.includes(wordGiven)
   }
 })
 
-const guessSubmitted = ref("")
+const guessesSubmitted = ref<string[]>([])
 
 </script>
 
 <template>
   <h1 class="text-primary text-center">Guess the Word!</h1>
-  <h2 class="text-secondary text-center">Start typing right up! You have 6 chances to win ;)</h2>
+  <h2 class="text-secondary text-center">
+    Start typing right up! You have 6 chances to win ;)
+  </h2>
   <div class="content-center">
-    <ul class="text-secondary letter-box-container">
+    <!--<ul class="text-secondary letter-box-container">
       <li v-if="guessSubmitted" v-for="letterGuessed in guessSubmitted.split('')" class="letter-box text-center">{{ letterGuessed }}</li>
       <li v-else="guessSubmitted" v-for="index in [...Array(5).keys()]" class="letter-box ">{{ "" }}</li>
-     </ul>
+    </ul>-->
   </div>
-  <guessInput @guess-submitted="(guess: string) => guessSubmitted = guess" />
-  <p v-if="guessSubmitted.length > 0" v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
+  <guessInput @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
+  <p v-if="guessesSubmitted.length === MAX_GUESSES_COUNT || guessesSubmitted.includes(wordOfTheDay)" 
+  v-text="guessesSubmitted.includes(wordOfTheDay) ? 
+  VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
 </template>
 
 <style scoped>
@@ -47,7 +52,7 @@ const guessSubmitted = ref("")
   }
 
   .text-secondary {
-    color: #2b5f15;
+    color: #3e9e12;
     font-family: "Outfit", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -64,7 +69,7 @@ const guessSubmitted = ref("")
   .letter-box-container:last-child {
     margin-right: 0;
   }
-  
+
   .letter-box {
     display: inline-flex;
     justify-content: center;

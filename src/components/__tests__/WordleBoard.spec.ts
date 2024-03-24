@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import WordleBoard from "../WordleBoard.vue";
-import { VICTORY_MESSAGE, WORD_SIZE, WRONG_GUESS_MESSAGE } from '@/settings'
+import { MAX_GUESSES_COUNT, VICTORY_MESSAGE, WORD_SIZE, WRONG_GUESS_MESSAGE } from '@/settings'
 
 describe('WordleBoard', () => {
   let wordOfTheDay = "TESTS"
@@ -24,12 +24,28 @@ describe('WordleBoard', () => {
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
   
-    test("A defeat message appears if the user makes a guess that is incorrect", async() => {
-      await playerSubmitsGuess("FIRST")
-  
-      expect(wrapper.text()).toContain(WRONG_GUESS_MESSAGE)
+    describe.each([
+      {numberOfGuesses: 0, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: 1, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: 2, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: 3, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: 4, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: 5, shouldSeeDefeatMessage: false},
+      {numberOfGuesses: MAX_GUESSES_COUNT, shouldSeeDefeatMessage: true},
+    ])("A defeat message should appear if the player meakes incorrect guesses 6 times in a row", ({numberOfGuesses, shouldSeeDefeatMessage}) => {
+      test(`therefore for ${numberOfGuesses} guess(es), a defeat message should ${shouldSeeDefeatMessage ? "" : "not"} appear`, async () => {
+        for (let i = 0; i < numberOfGuesses; i++) {
+          await playerSubmitsGuess("WRONG")
+        }
+
+        if (shouldSeeDefeatMessage) {
+          expect(wrapper.text()).toContain(WRONG_GUESS_MESSAGE)
+        } else {
+          expect(wrapper.text()).not.toContain(WRONG_GUESS_MESSAGE)
+        }
+      })
     })
-  
+
     test("no end-of-game message appears if the user has not yet made a guess", async() => {
       expect(wrapper.text()).not.toContain(WRONG_GUESS_MESSAGE)
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
@@ -61,8 +77,7 @@ describe('WordleBoard', () => {
 
   describe("Player input view", () => {
     test("Five empty boxes appears with the inital guess", async() => {
-      wrapper.find("li")
-      expect()
+      
     })
   })
 

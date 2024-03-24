@@ -24,9 +24,9 @@ const formattedGuessInProgress = computed<string>({
 })
 
 function onInput() {
-  // if (!englishWords.includes(formattedGuessInProgress.value)) {
-  //   return;
-  // }
+  if (!englishWords.includes(formattedGuessInProgress.value)) {
+    return;
+  }
 
   emit("guess-submitted", formattedGuessInProgress.value)
 }
@@ -43,7 +43,5 @@ function onInput() {
 </template>
 
 <style scoped>
-  input {
-    /* visibility: hidden; */
-  }
+
 </style>
