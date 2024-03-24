@@ -79,9 +79,6 @@ describe('WordleBoard', () => {
       expect(document.activeElement).toBe(wrapper.find("input[type=text]").element)
     })
 
-    test("Word of the day text input remains hidden during all the game", async() => {
-      expect(wrapper.find<HTMLInputElement>("input[type=text]").attributes("hidden")).not.toBeUndefined()
-    })
     test(`player guesses are lmited to ${WORD_SIZE} letters`, async() => {
       await playerSubmitsGuess(wordOfTheDay + "EXTRA")
 

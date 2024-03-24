@@ -23,10 +23,10 @@ const formattedGuessInProgress = computed<string>({
   }
 })
 
-function onSubmit() {
-  if (!englishWords.includes(formattedGuessInProgress.value)) {
-    return;
-  }
+function onInput() {
+  // if (!englishWords.includes(formattedGuessInProgress.value)) {
+  //   return;
+  // }
 
   emit("guess-submitted", formattedGuessInProgress.value)
 }
@@ -35,9 +35,15 @@ function onSubmit() {
 <template>
   <input type="text" 
     autofocus
-    hidden
+    maxlength="5"
     @blur="({target}) => (target as HTMLInputElement).focus()"
     v-model="formattedGuessInProgress" 
-    @keydown.enter="onSubmit"
+    @input="onInput"
   >
 </template>
+
+<style scoped>
+  input {
+    /* visibility: hidden; */
+  }
+</style>

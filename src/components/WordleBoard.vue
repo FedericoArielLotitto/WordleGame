@@ -19,13 +19,10 @@ const guessSubmitted = ref("")
   <h1 class="text-primary text-center">Guess the Word!</h1>
   <h2 class="text-secondary text-center">Start typing right up! You have 6 chances to win ;)</h2>
   <div class="content-center">
-    <ul class="letter-box-container">
-      <li class="letter-box"></li>
-      <li class="letter-box"></li>
-      <li class="letter-box"></li>
-      <li class="letter-box"></li>
-      <li class="letter-box"></li>
-    </ul>
+    <ul class="text-secondary letter-box-container">
+      <li v-if="guessSubmitted" v-for="letterGuessed in guessSubmitted.split('')" class="letter-box text-center">{{ letterGuessed }}</li>
+      <li v-else="guessSubmitted" v-for="index in [...Array(5).keys()]" class="letter-box ">{{ "" }}</li>
+     </ul>
   </div>
   <guessInput @guess-submitted="(guess: string) => guessSubmitted = guess" />
   <p v-if="guessSubmitted.length > 0" v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
@@ -39,7 +36,8 @@ const guessSubmitted = ref("")
   }
   .text-center {
     text-align: center;
-    vertical-align: middle;
+    display: grid;
+    align-items: center;
   }
   .text-primary {
     color: #0f2d06;
@@ -60,7 +58,7 @@ const guessSubmitted = ref("")
     list-style-type: none;
     display: grid;
     grid-template: 2.4rem / auto auto auto auto auto;
-    gap: 12px;
+    gap: 10px;
     padding: 0;
     margin: 0;
     width: 350px
@@ -70,6 +68,7 @@ const guessSubmitted = ref("")
     border-radius: 15px;
     background-color: #f1fde8;
     height: 3.8rem;
-    width: 100%;
+    width: 60px;
+    font-size: 2rem;
   }
 </style>
