@@ -59,7 +59,29 @@ describe('WordleBoard', () => {
     })
   })
 
+  describe("Player input view", () => {
+    test("Five empty boxes appears with the inital guess", async() => {
+      wrapper.find("li")
+      expect()
+    })
+  })
+
   describe("Player input", () => {
+    test("Word of the day text input remains focus during all the game", async() => {
+      document.body.innerHTML = `<div id="app"></div>`
+      wrapper = mount(WordleBoard, {
+        props: {wordOfTheDay},
+        attachTo: "#app"
+      })
+      expect(wrapper.find("input[type=text]").attributes("autofocus")).not.toBeUndefined()
+
+      await wrapper.find("input[type=text]").trigger("blur")
+      expect(document.activeElement).toBe(wrapper.find("input[type=text]").element)
+    })
+
+    test("Word of the day text input remains hidden during all the game", async() => {
+      expect(wrapper.find<HTMLInputElement>("input[type=text]").attributes("hidden")).not.toBeUndefined()
+    })
     test(`player guesses are lmited to ${WORD_SIZE} letters`, async() => {
       await playerSubmitsGuess(wordOfTheDay + "EXTRA")
 
