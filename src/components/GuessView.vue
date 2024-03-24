@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { WORD_SIZE } from '@/settings';
 
-const props = defineProps<{guess: string}>()
+defineProps<{guess: string}>()
 </script>
 
 <template>

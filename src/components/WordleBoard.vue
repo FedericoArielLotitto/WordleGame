@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import GuessInput from "@/components/GuessInput.vue";
 import englishWords from '@/englishWordsWith5Letters.json'
 import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE, MAX_GUESSES_COUNT } from '@/settings';
+import GuessView from './GuessView.vue';
 
 const props = defineProps({
   wordOfTheDay: {
@@ -14,31 +15,38 @@ const props = defineProps({
 
 const guessesSubmitted = ref<string[]>([])
 
-const isGameOver = computed(() => guessesSubmitted.value.length === MAX_GUESSES_COUNT || guessesSubmitted.value.includes(props.wordOfTheDay))
+const isGameOver = computed(() =>
+  guessesSubmitted.value.length === MAX_GUESSES_COUNT
+  || guessesSubmitted.value.includes(props.wordOfTheDay)
+)
 
+const countOfEmptyGuesses = computed(() => {
+  const guessesRemaing = MAX_GUESSES_COUNT - guessesSubmitted.value.length
+
+  console.log(guessesRemaing)
+  return isGameOver.value ? guessesRemaing : guessesRemaing - 1
+})
 </script>
 
 <template>
   <!--<h1 class="text-primary text-center">Guess the Word!</h1>
   <h2 class="text-secondary text-center">
     Start typing right up! You have 6 chances to win ;)
-  </h2>
-  <div class="content-center">
-    <ul class="text-secondary letter-box-container">
-      <li v-if="guessSubmitted" v-for="letterGuessed in guessSubmitted.split('')" class="letter-box text-center">{{ letterGuessed }}</li>
-      <li v-else="guessSubmitted" v-for="index in [...Array(5).keys()]" class="letter-box ">{{ "" }}</li>
-    </ul>
-  </div>-->
+  </h2>-->
   <main>
     <ul>
       <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
-        {{ guess }}
+        <GuessView :guess="guess" />
+      </li>
+      <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
+        <guess-view :guess="''" />
       </li>
     </ul>
     <p v-if="isGameOver" v-text="guessesSubmitted.includes(wordOfTheDay) ?
         VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
+    <guessInput :disabled="isGameOver"
+      @guess-submitted="(guess: string) => { console.log(guess); guessesSubmitted.push(guess); }" />
   </main>
-  <guessInput @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
 </template>
 
 <style scoped>
