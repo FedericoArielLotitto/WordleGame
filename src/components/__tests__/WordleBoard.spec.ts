@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import WordleBoard from '../WordleBoard.vue'
+import WordleBoard from "../WordleBoard.vue";
 import { VICTORY_MESSAGE, WORD_SIZE, WRONG_GUESS_MESSAGE } from '@/settings'
 
 describe('WordleBoard', () => {
@@ -12,6 +12,7 @@ describe('WordleBoard', () => {
   
   async function playerSubmitsGuess(guess: string) {
     const guessInput = wrapper.find("input[type=text]")
+    
     await guessInput.setValue(guess)
     await guessInput.trigger("keydown.enter")
   }
@@ -77,10 +78,18 @@ describe('WordleBoard', () => {
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
     })
     
-    test("player geusses can only contain letters", async() => {
+    test("player guesses can only contain letters", async() => {
       await playerSubmitsGuess("H3!RT")
 
+      console.log("acaaaaaaa", wrapper.find<HTMLInputElement>('input[type=text]'), "acccaaaaaaa")
       expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual('HRT')
+    })
+    
+    test.skip("non-letter characters do not render on the screen while being typed", async() => {
+      await playerSubmitsGuess("333")
+      await playerSubmitsGuess("3333")
+      
+      expect(wrapper.find<HTMLInputElement>('input[type=text]').element.value).toEqual('')
     })
   })
 })

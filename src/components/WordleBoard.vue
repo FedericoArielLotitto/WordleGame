@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import GuessInput from "@/components/GuessInput.vue";
 import englishWords from '@/englishWordsWith5Letters.json'
-import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE, WORD_SIZE } from '@/settings';
+import { VICTORY_MESSAGE, WRONG_GUESS_MESSAGE } from '@/settings';
 
 defineProps({
   wordOfTheDay: {
@@ -10,34 +11,11 @@ defineProps({
   }
 })
 
-const guessInProgress = ref("")
 const guessSubmitted = ref("")
 
-const formattedGuessInProgress = computed({
-  get() {
-    return guessInProgress.value
-  },
-  set(rawValue: string) {
-    guessInProgress.value = rawValue
-      .slice(0, WORD_SIZE)
-      .toUpperCase()
-      .replace(/[^A-Z]+/gi, "")
-  }
-})
-
-function onSubmit() {
-  if (!englishWords.includes(guessInProgress.value)) {
-    return;
-  }
-  guessSubmitted.value = guessInProgress.value
-}
 </script>
 
 <template>
-  <input type="text" 
-    maxlength="5"
-    v-model="formattedGuessInProgress" 
-    @keydown.enter="onSubmit"
-  >
+  <guessInput @guess-submitted="(guess: string) => guessSubmitted = guess" />
   <p v-if="guessSubmitted.length > 0" v-text="guessSubmitted === wordOfTheDay ? VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
 </template>
