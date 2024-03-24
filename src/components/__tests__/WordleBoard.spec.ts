@@ -193,5 +193,58 @@ describe('WordleBoard', () => {
 
 
   })
+
+  describe("Display hints/feedback to the player", () => {
+    test.skip("Hints are not displayed until the player sumbits thier guess", async () => {
+      expect(wrapper.find("[data-letter-feedback]").exists(), "Feedback was being rendered before the player started typing").toBe(false)
+      
+      await playerTypesGuess(wordOfTheDay)
+      expect(wrapper.find("[data-letter-feedback]").exists(), "Feedback was being rendered while the player was typing their guess").toBe(false)
+      
+      await playerPressesEnter()
+      expect(wrapper.find("[data-letter-feedback]").exists(), "Feedback was being rendered while the player was typing their guess").toBe(true)
+    })
+  })
+
+  describe.each([
+    {
+      position: 0,
+      expectedFeedback: "correct",
+      reason: "W is the first letter of 'WORLD' and 'WRONG'"
+    },
+    {
+      position: 1,
+      expectedFeedback: "almost",
+      reason: "R exists in both words, but it is in position '2' of WORLD"
+    },
+    {
+      position: 2,
+      expectedFeedback: "almost",
+      reason: "O exists in both words, but it is in position '1' of WORLD"
+    },
+    {
+      position: 3,
+      expectedFeedback: "incorrect",
+      reason: "N does not exist in 'WORLD'"
+    },
+    {
+      position: 4,
+      expectedFeedback: "incorrect",
+      reason: "G does not exist in 'WORLD'"
+    }
+  ])("Given the word of day 'WORLD' and the player types 'WRONG'", ({position, expectedFeedback, reason}) => {
+    const wordOfTheDay = "WORLD"
+    const playerGuess = "WRONG"
+
+    test.skipIf(expectedFeedback !== "correct")(`the feedback for '${playerGuess[position]}' (index: ${position}) should be '${expectedFeedback} becasuse '${reason}'`, async () => {
+      wrapper = mount(WordleBoard, {propsData: {wordOfTheDay}})
+
+      await playerTypesAndSubmitsGuess(playerGuess)
+
+      const actualFeedback = wrapper.findAll("[data-letter]").at(position)?.attributes("data-letter-feedback")
+
+      expect(actualFeedback).toEqual(expectedFeedback)
+    })
+  })
 })
 
