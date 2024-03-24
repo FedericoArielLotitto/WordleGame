@@ -38,14 +38,14 @@ describe('WordleBoard', () => {
   describe("Rules for defining the word of the day", () => {
     test.each(
       [
-        "FLY",
-        "words",
-        "AXXUR"
+        {wordOfTheDay: "FLY", failureReason: "doesnt'have 5 letters"},
+        {wordOfTheDay: "words", failureReason: "is not all uppercase"},
+        {wordOfTheDay: "AXXUR", failureReason: "doesn't exist in English"}
       ]
-    )("If the word '%s' is provided, a warning is emitted", async(wordOfTheDay) => {
+    )("Given the word $wordOfTheDay, which $failureReason, a warning is emitted", async({wordOfTheDay}) => {
       console.warn = vi.fn()
   
-      mount(WordleBoard, {props: {wordOfTheDay: wordOfTheDay}})
+      mount(WordleBoard, {props: {wordOfTheDay}})
   
       expect(console.warn).toHaveBeenCalled()
     })
