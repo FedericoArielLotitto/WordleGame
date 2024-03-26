@@ -29,10 +29,10 @@ const countOfEmptyGuesses = computed(() => {
 </script>
 
 <template>
-  <!--<h1 class="text-primary text-center">Guess the Word!</h1>
+  <h1 class="text-primary text-center">Guess the Word!</h1>
   <h2 class="text-secondary text-center">
     Start typing right up! You have 6 chances to win ;)
-  </h2>-->
+  </h2>
   <main>
     <ul>
       <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
@@ -66,6 +66,14 @@ const countOfEmptyGuesses = computed(() => {
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
+  font-style: normal;
+}
+
+.text-secondary {
+  color: #0F2D06;
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
   font-style: normal;
 }
 
