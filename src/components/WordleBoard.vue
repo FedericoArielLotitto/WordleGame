@@ -13,7 +13,7 @@ const props = defineProps({
   }
 })
 
-const guessesSubmitted = ref<string[]>([])
+let guessesSubmitted = ref<string[]>([])
 
 const isGameOver = computed(() =>
   guessesSubmitted.value.length === MAX_GUESSES_COUNT
@@ -24,6 +24,7 @@ const countOfEmptyGuesses = computed(() => {
   const guessesRemaing = MAX_GUESSES_COUNT - guessesSubmitted.value.length
 
   console.log(guessesRemaing)
+  console.log(guessesSubmitted.value)
   return isGameOver.value ? guessesRemaing : guessesRemaing - 1
 })
 </script>
@@ -40,19 +41,36 @@ const countOfEmptyGuesses = computed(() => {
       <li class="word-row" v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
         <guess-view :guess="guess" :answer="wordOfTheDay" />
       </li>
-      <li class="word-row">
-        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
+      <li :class="isGameOver ? 'invisible' : 'word-row'">
+        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => { guessesSubmitted.push(guess) }" />
       </li>
       <li class="word-row" v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
         <guess-view :guess="''" />
       </li>
     </ul>
-    <p class="text-primary" v-if="isGameOver" v-text="guessesSubmitted.includes(wordOfTheDay) ?
-        VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
+    <p class="text-secondary text-center final-message-container" v-if="isGameOver">
+      <span class="victory" v-if="guessesSubmitted.includes(wordOfTheDay)">{{ VICTORY_MESSAGE }}</span>    
+      <span class="defeat" v-else>{{ WRONG_GUESS_MESSAGE }}</span>    
+    </p>
   </main>
 </template>
 
 <style scoped>
+  .defeat {
+    color: var(--primary-text-color);
+  }
+
+  .final-message-container {
+    /*margin-top: -15rem;*/
+    background-color: var(--primary-color);
+    color: #f1fde8;
+    font-size: 1.6rem;
+  }
+  
+  .invisible {
+    display: none;
+  }
+
   .padding-horizontal-2 {
     padding: 0 2rem;
   }
