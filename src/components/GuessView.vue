@@ -52,4 +52,18 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
     font-size: 1.8rem;
     margin: 4px;
   }
+
+  li:not([data-letter=" "]) {
+    animation: pop 1000ms;
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.4);
+    }
+  }
 </style>
