@@ -20,12 +20,12 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
 </script>
 
 <template>
-  <ul class="">
+  <ul class="letter-box-container">
     <li v-for="(letter, index) in guess.padEnd(WORD_SIZE, ' ')" 
     :key="`${letter}-${index}`"
     :data-letter-feedback="getFeedback(index)"
     :data-letter="letter"
-    class="letter" 
+    class="letter text-secondary" 
     v-text="letter">
     </li>
   </ul>
@@ -34,15 +34,21 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
 <style scoped>
   .letter-box-container {
     list-style: none;
+    width: 100%;
     display: flex;
-    gap: 2.4rem;
+    justify-content: center;
   }
 
-  .text-secondary {
-    color: #3e9e12;
-    font-family: "Outfit", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+  .letter {
+    list-style: none;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    border: solid 2px #327813;
+    border-radius: 15px;
+    font-size: 1.8rem;
+    margin: 4px;
   }
 </style>

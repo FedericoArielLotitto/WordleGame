@@ -29,68 +29,63 @@ const countOfEmptyGuesses = computed(() => {
 </script>
 
 <template>
-  <h1 class="text-primary text-center">Guess the Word!</h1>
-  <h2 class="text-secondary text-center">
-    Start typing right up! You have 6 chances to win ;)
-  </h2>
-  <main>
-    <ul>
-      <li v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
-        <GuessView :guess="guess" :answer="wordOfTheDay"/>
+  <header class="padding-horizontal-2">
+    <h1 class="text-primary text-center">Guess the Word!</h1>
+    <h2 class="text-secondary text-center">
+      Start typing right up! You have 6 chances to win ;)
+    </h2>
+  </header>
+  <main class="container">
+    <ul class="letter-box-container">
+      <li class="word-row" v-for="(guess, index) in guessesSubmitted" :key="`${index}-${guess}`">
+        <guess-view :guess="guess" :answer="wordOfTheDay" />
       </li>
-      <li v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
+      <li class="word-row">
+        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
+      </li>
+      <li class="word-row" v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
         <guess-view :guess="''" />
       </li>
     </ul>
-    <p v-if="isGameOver" v-text="guessesSubmitted.includes(wordOfTheDay) ?
+    <p class="text-primary" v-if="isGameOver" v-text="guessesSubmitted.includes(wordOfTheDay) ?
         VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"></p>
-    <guessInput :disabled="isGameOver"
-      @guess-submitted="(guess: string) => guessesSubmitted.push(guess)" />
   </main>
 </template>
 
 <style scoped>
-.content-center {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0;
-}
+  .padding-horizontal-2 {
+    padding: 0 2rem;
+  }
 
-.text-center {
-  text-align: center;
-  vertical-align: middle;
-}
+  .container {
+    padding: 0;
+    padding-top: 2rem;
+  }
 
-.text-primary {
-  color: #0f2d06;
-  font-family: "Outfit", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
+  .content-center {
+    display: flex;
+    justify-content: center;
+  }
 
-.text-secondary {
-  color: #0F2D06;
-  font-family: "Outfit", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-}
+  .letter-box-container {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 
-.letter-box-container:last-child {
-  margin-right: 0;
-}
+  .word-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 
-.letter-box {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #52c01b;
-  border-radius: 15px;
-  background-color: #f1fde8;
-  height: 3.8rem;
-  width: 60px;
-  font-size: 2rem;
-  margin-right: 5px;
-}
+  @media (width > 575px) {
+    .container {
+      padding-left: 25%;
+      padding-right: 25%;
+    }
+  }
 </style>

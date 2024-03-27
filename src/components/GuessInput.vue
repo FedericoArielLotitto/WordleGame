@@ -36,9 +36,10 @@ function onSubmit() {
 </script>
 
 <template>
-  <GuessView :guess="formattedGuessInProgress"/>
+  <guess-view :guess="formattedGuessInProgress"/>
 
   <input 
+    class="invisible"
     type="text" 
     autofocus 
     :maxlength="WORD_SIZE" 
@@ -55,5 +56,10 @@ function onSubmit() {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
+  }
+
+  .invisible {
+    position: absolute;
+    opacity: 0;
   }
 </style>
