@@ -41,6 +41,7 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
 
   .letter {
     list-style: none;
+    background-color: #ffffff;
     display: inline-block;
     align-content: center;
     text-align: center;

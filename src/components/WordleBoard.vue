@@ -48,23 +48,39 @@ const countOfEmptyGuesses = computed(() => {
         <guess-view :guess="''" />
       </li>
     </ul>
-    <p class="text-secondary text-center final-message-container" v-if="isGameOver">
-      <span class="victory" v-if="guessesSubmitted.includes(wordOfTheDay)">{{ VICTORY_MESSAGE }}</span>    
-      <span class="defeat" v-else>{{ WRONG_GUESS_MESSAGE }}</span>    
-    </p>
+    <footer class="footer">
+      <p v-if="isGameOver" 
+        class="text-center final-message-container" 
+        :class="guessesSubmitted.includes(wordOfTheDay) ? 'victory' : 'defeat'"
+        v-text="guessesSubmitted.includes(wordOfTheDay) ? VICTORY_MESSAGE : WRONG_GUESS_MESSAGE"
+      >    
+      </p>
+    </footer>
   </main>
 </template>
 
 <style scoped>
   .defeat {
-    color: var(--primary-text-color);
+    color: #F1FDE8;
+    background-color: var(--primary-text-color);
+    border: ridge 3px #F1FDE8;
+  }
+
+  .victory {
+    background-color: var(--primary-color);
+    color: #f1fde8;
   }
 
   .final-message-container {
-    /*margin-top: -15rem;*/
-    background-color: var(--primary-color);
-    color: #f1fde8;
+    margin-top: -15rem;
+    padding: 1.6rem;
+    border-radius: 15px;
     font-size: 1.6rem;
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    isolation: isolate;
   }
   
   .invisible {
@@ -100,8 +116,12 @@ const countOfEmptyGuesses = computed(() => {
     width: 100%;
   }
 
+  .footer {
+    padding: 0 2rem;
+  }
+
   @media (width > 575px) {
-    .container {
+    .container, .footer {
       padding-left: 25%;
       padding-right: 25%;
     }
