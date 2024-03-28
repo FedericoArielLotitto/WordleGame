@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { WORD_SIZE } from '@/settings';
 
-const props = defineProps<{ guess: string, answer?: string }>()
+const props = defineProps<{ guess: string, answer?: string, isWrongWord?: boolean }>()
 
 function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | 'almost' {
   if (!props.answer) {
@@ -25,7 +25,7 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
     :key="`${letter}-${index}`"
     :data-letter-feedback="getFeedback(index)"
     :data-letter="letter"
-    class="letter text-secondary" 
+    class="letter text-secondary"
     v-text="letter">
     </li>
   </ul>

@@ -24,9 +24,13 @@ const formattedGuessInProgress = computed<string>({
   }
 })
 
+const isWrongWord = ref<boolean>(false)
+
 function onSubmit() {
   if (!englishWords.includes(formattedGuessInProgress.value)) {
-    return;
+    isWrongWord.value = true
+    setTimeout(() => isWrongWord.value = false, 500)
+    return
   }
 
   emit("guess-submitted", formattedGuessInProgress.value)
@@ -36,7 +40,7 @@ function onSubmit() {
 </script>
 
 <template>
-  <guess-view :guess="formattedGuessInProgress"/>
+  <guess-view :class="{ 'is-shaking' : isWrongWord }" :guess="formattedGuessInProgress"/>
 
   <input 
     class="invisible"
@@ -61,5 +65,17 @@ function onSubmit() {
   .invisible {
     position: absolute;
     opacity: 0;
+  }
+
+  .is-shaking {
+    animation: 100ms tilt-move-shaking 6;
+  }
+
+  @keyframes tilt-move-shaking {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(5deg); }
+    50% { transform: translate(0, 0) rotate(0deg); }
+    75% { transform: translate(-5px, 5px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
   }
 </style>
