@@ -39,7 +39,7 @@ const countOfEmptyGuesses = computed(() => {
         <guess-view :guess="guess" :answer="wordOfTheDay" />
       </li>
       <li :class="isGameOver ? 'invisible' : 'word-row'">
-        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => { guessesSubmitted.push(guess) }" />
+        <guess-input :disabled="isGameOver" @guess-submitted="(guess: string) => { if (!guessesSubmitted.includes(guess)) { guessesSubmitted.push(guess) }}" />
       </li>
       <li class="word-row" v-for="i in countOfEmptyGuesses" :key="`remaining-guess-${i}`">
         <guess-view :guess="''" />

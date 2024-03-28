@@ -16,18 +16,14 @@ const formattedGuessInProgress = computed<string>({
   },
   set(rawValue: string) {
     guessInProgress.value = null
-
-    guessInProgress.value = rawValue
-      .slice(0, WORD_SIZE)
-      .toUpperCase()
-      .replace(/[^A-Z]+/gi, "")
+    guessInProgress.value = rawValue.replace(/[^A-Z]+/gi, "").slice(0, WORD_SIZE).toUpperCase()    
   }
 })
 
 const isWrongWord = ref<boolean>(false)
 
-function onSubmit() {
-  if (formattedGuessInProgress.value.length === WORD_SIZE) {
+function onInput() {
+  if (formattedGuessInProgress.value.length >= WORD_SIZE) {
     if (!/^\s*$/.test(formattedGuessInProgress.value)
       && !englishWords.includes(formattedGuessInProgress.value)) {
       isWrongWord.value = true
@@ -37,7 +33,6 @@ function onSubmit() {
 
     emit("guess-submitted", formattedGuessInProgress.value)
     guessInProgress.value = null
-
   }
 
 }
@@ -47,7 +42,7 @@ function onSubmit() {
   <guess-view :class="{ 'is-shaking': isWrongWord }" :guess="formattedGuessInProgress" />
 
   <input class="invisible" type="text" autofocus :maxlength="WORD_SIZE" :disabled="disabled"
-    @blur="({ target }) => (target as HTMLInputElement).focus()" v-model="formattedGuessInProgress" @input="onSubmit">
+    @blur="({ target }) => { (target as HTMLInputElement).focus(); $forceUpdate() }" v-model="formattedGuessInProgress" @input="onInput">
 </template>
 
 <style scoped>

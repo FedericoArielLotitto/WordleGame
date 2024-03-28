@@ -103,7 +103,6 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
     100% {
       transform: rotateY(0);
       border-width: 4px;
-      /* border-style: outset; */
     }
   }
 </style>
