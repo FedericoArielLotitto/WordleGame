@@ -1,39 +1,32 @@
-# wordle
+# Wordle Clone! 😀
+![wordle](https://github.com/FedericoArielLotitto/wordle-clone/assets/62823425/61633e7c-3cf2-41a4-8556-c16f128cf04d)
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a clone of the famous Wordle game published by the New York Times every day. As in the original Wordle, you can enter to the [Wordle Clone](https://federicoariellotitto.github.io/wordle-clone) in every resolution and try it.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Technologies
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This clone is built with VueJS 3 and Typescript, with Vite as a bundler. 
+The list of words are the most possible I could collect and are persisted in a file in the same code's directory. 
+Thus, you don't need a database set up (Mongo, MySQL or the database motor you like the most) to try the code.
+I encourage you to do a fork and create one if you want to challenge yourself 😍!
 
 ## Project Setup
-
 ```sh
 pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
-
 ```sh
 pnpm dev
 ```
 
 ### Type-Check, Compile and Minify for Production
-
 ```sh
 pnpm build
 ```
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
-
 ```sh
 pnpm test:unit
 ```
